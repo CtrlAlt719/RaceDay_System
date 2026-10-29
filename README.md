@@ -50,6 +50,9 @@ If you want to log in and play around, I've set up some test accounts. The passw
 *   `Data/` - The database context, migrations, and the seeder logic
 *   `Models/` - The core entities (Events, Categories, Enrolments, Users)
 *   `Views/` - The HTML/Razor front-end.
+
+*   Created by Asanda Ndlovu
+*   ST10488663
 *   `RaceDay_System.Test/` - The unit tests
 *   `.github/workflows/` - The automated build pipeline
 
