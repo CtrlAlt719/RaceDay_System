@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using RaceDay_System.Data;
 using RaceDay_System.Models;
+using System.Collections.Generic;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -62,7 +63,7 @@ builder.Services.AddAuthentication(options =>
     });
 
 // -------------------------------------------------------------
-// 4. MVC + Razor Pages + Swagger
+// 4. MVC + Razor Pages + Swagger 
 // -------------------------------------------------------------
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -82,19 +83,10 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Enter the JWT from /api/auth/login."
     });
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    // In Swashbuckle v10, use the document factory syntax:
+    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id   = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
     });
 });
 
@@ -116,12 +108,11 @@ using (var scope = app.Services.CreateScope())
 // -------------------------------------------------------------
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(options =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "RaceDay API v1");
-        c.RoutePrefix = "swagger";
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "RaceDay API v1");
+        options.RoutePrefix = "swagger";
     });
 }
 else

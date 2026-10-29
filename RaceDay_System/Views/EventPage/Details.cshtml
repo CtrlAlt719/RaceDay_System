@@ -1,0 +1,42 @@
+﻿@model RaceDay_System.Models.Event
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-4">
+    <h1>@Model.Name</h1>
+    <h4 class="text-muted">@Model.Venue - @Model.EventDate.ToString("dd MMM yyyy")</h4>
+    <hr />
+    <p>@Model.Description</p>
+
+    <h3 class="mt-4">Race Categories</h3>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Category Name</th>
+                <th>Distance (km)</th>
+                <th>Entry Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Categories != null && Model.Categories.Any())
+            {
+                foreach (var cat in Model.Categories)
+                {
+                    <tr>
+                        <td>@cat.Name</td>
+                        <td>@cat.DistanceKm</td>
+                        <td>R @cat.EntryFee</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3">No categories added yet.</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

@@ -1,0 +1,48 @@
+﻿@model RaceDay_System.Models.Event
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container mt-4">
+    <h2>Edit Race Event</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="EventId" />
+                <input type="hidden" asp-for="OrganiserId" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label">Event Name</label>
+                    <input asp-for="Name" class="form-control" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="EventDate" class="control-label">Date</label>
+                    <input asp-for="EventDate" class="form-control" type="date" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Venue" class="control-label">Venue</label>
+                    <input asp-for="Venue" class="form-control" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Status" class="control-label">Status</label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="Upcoming">Upcoming</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-success" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

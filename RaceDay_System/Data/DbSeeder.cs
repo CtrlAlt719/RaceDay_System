@@ -30,6 +30,61 @@ namespace RaceDay_System.Data
                 await EnsureUser(userManager, "Sipho", "Zulu", "sipho.zulu@example.com", "Participant", "Passw0rd!");
                 await EnsureUser(userManager, "Amahle", "Ndlovu", "amahle.ndlovu@example.com", "Participant", "Passw0rd!");
             }
+
+            // 4. Seed Sample Events and Categories (only if events table empty)
+            if (!await context.Events.AnyAsync())
+            {
+                // Find the organiser we just created to link the events to them
+                var organiser = await userManager.FindByEmailAsync("thabo.mkhize@raceday.co.za");
+
+                if (organiser != null)
+                {
+                    var event1 = new Event
+                    {
+                        OrganiserId = organiser.Id,
+                        Name = "Cape Town Marathon",
+                        Description = "A scenic 42km run along the coast.",
+                        EventDate = DateTime.UtcNow.AddDays(30), // 30 days from now
+                        Venue = "Cape Town Stadium",
+                        Status = "Upcoming"
+                    };
+
+                    var event2 = new Event
+                    {
+                        OrganiserId = organiser.Id,
+                        Name = "Durban Cycle Tour",
+                        Description = "100km cycling race through the city.",
+                        EventDate = DateTime.UtcNow.AddDays(60),
+                        Venue = "Durban Beachfront",
+                        Status = "Upcoming"
+                    };
+
+                    var event3 = new Event
+                    {
+                        OrganiserId = organiser.Id,
+                        Name = "Joburg 10k Night Run",
+                        Description = "A fast flat 10k run under the city lights.",
+                        EventDate = DateTime.UtcNow.AddDays(-10), // Past event
+                        Venue = "Sandton CBD",
+                        Status = "Completed"
+                    };
+
+                    context.Events.AddRange(event1, event2, event3);
+                    await context.SaveChangesAsync(); // Save events first to generate their IDs
+
+                    // Add categories to the events
+                    var categories = new List<Category>
+                    {
+                        new Category { EventId = event1.EventId, Name = "Full Marathon", DistanceKm = 42, Capacity = 500, EntryFee = 250 },
+                        new Category { EventId = event1.EventId, Name = "Half Marathon", DistanceKm = 21, Capacity = 1000, EntryFee = 150 },
+                        new Category { EventId = event2.EventId, Name = "Pro 100km", DistanceKm = 100, Capacity = 200, EntryFee = 400 },
+                        new Category { EventId = event3.EventId, Name = "Open 10k", DistanceKm = 10, Capacity = 2000, EntryFee = 100 }
+                    };
+
+                    context.Categories.AddRange(categories);
+                    await context.SaveChangesAsync();
+                }
+            }
         }
 
         private static async Task EnsureUser(
