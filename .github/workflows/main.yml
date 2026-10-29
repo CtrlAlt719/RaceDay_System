@@ -12,18 +12,18 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
     - name: Restore Dependencies
-      run: dotnet restore
+      run: dotnet restore RaceDay_System.sln
 
     - name: Build Project
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build RaceDay_System.sln --no-restore --configuration Release
 
     - name: Run Tests
-      run: dotnet test --no-build --verbosity normal --configuration Release
+      run: dotnet test RaceDay_System.sln --no-build --verbosity normal --configuration Release
