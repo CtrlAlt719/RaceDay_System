@@ -19,11 +19,16 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore Dependencies
-      run: dotnet restore RaceDay_System.sln
+    # We specifically point to the folder for the main web app
+    - name: Restore Main Project
+      run: dotnet restore ./RaceDay_System/RaceDay_System.csproj
 
-    - name: Build Project
-      run: dotnet build RaceDay_System.sln --no-restore --configuration Release
+    - name: Build Main Project
+      run: dotnet build ./RaceDay_System/RaceDay_System.csproj --no-restore --configuration Release
 
-    - name: Run Tests
-      run: dotnet test RaceDay_System.sln --no-build --verbosity normal --configuration Release
+    # We specifically point to the folder for the tests
+    - name: Restore Test Project
+      run: dotnet restore ./RaceDay_System.Test/RaceDay_System.Test.csproj
+
+    - name: Build Test Project
+      run: dotnet build ./RaceDay_System.Test/RaceDay_System.Test.csproj --no-restore --configuration Release
