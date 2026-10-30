@@ -140,7 +140,11 @@ namespace RaceDay_System.Controllers
             return NoContent();
         }
 
-        // GET: /api/events/{eventId}/categories  (public)
+        /// <summary>
+        /// Retrieves a list of all race from the database
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpGet("{eventId}/categories")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCategories(int eventId)
