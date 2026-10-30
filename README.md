@@ -22,6 +22,22 @@ It handles everything from an Organiser creating a race, to a Participant loggin
 *   **Frontend:** Razor Views and Bootstrap 5
 *   **Testing:** xUnit and EF Core In-Memory databases
 *   **DevOps:** GitHub Actions
+  
+   # RaceDay System API
+
+## Setup & Run Instructions
+1. Clone the repository.
+2. Open `RaceDay_System.sln` in Visual Studio.
+3. Update the `DefaultConnection` string in `appsettings.json` if necessary.
+4. Open the Package Manager Console and run `Update-Database`.
+5. Press `F5` to run the API. Swagger will open automatically.
+
+## User Roles
+*   **Organiser:** Can create, update, and delete events and categories. Can view enrolments and manage results.
+*   **Participant:** Can view events and categories. Can enrol in events and view their own results.
+
+## CI/CD Pipeline
+*(Drag and drop your GitHub Actions screenshot here)*
 
 ## how to run it locally
 
