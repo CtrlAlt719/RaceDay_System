@@ -1,0 +1,34 @@
+name: .NET Core Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # We specifically point to the folder for the main web app
+    - name: Restore Main Project
+      run: dotnet restore ./RaceDay_System/RaceDay_System.csproj
+
+    - name: Build Main Project
+      run: dotnet build ./RaceDay_System/RaceDay_System.csproj --no-restore --configuration Release
+
+    # We specifically point to the folder for the tests
+    - name: Restore Test Project
+      run: dotnet restore ./RaceDay_System.Test/RaceDay_System.Test.csproj
+
+    - name: Build Test Project
+      run: dotnet build ./RaceDay_System.Test/RaceDay_System.Test.csproj --no-restore --configuration Release
