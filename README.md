@@ -37,7 +37,7 @@ It handles everything from an Organiser creating a race, to a Participant loggin
 *   **Participant:** Can view events and categories. Can enrol in events and view their own results.
 
 ## CI/CD Pipeline
-*(Drag and drop your GitHub Actions screenshot here)*
+![CI/CD Build Success](RaceDay_System/ci-cd-success.png)
 
 ## how to run it locally
 
