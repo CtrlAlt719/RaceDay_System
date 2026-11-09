@@ -69,6 +69,15 @@ If you want to log in and play around, I've set up some test accounts. The passw
 
 *   Created by Asanda Ndlovu
 *   ST10488663
+
+
+## How to run with Docker
+
+This application is containerized using Docker. To build and run the application, execute the following commands from the root of the repository:
+
+```bash
+docker build -t raceday-web -f RaceDay_Web/Dockerfile .
+docker run -d -p 8080:80 --name raceday-app raceday-web
 *   `RaceDay_System.Test/` - The unit tests
 *   `.github/workflows/` - The automated build pipeline
 
