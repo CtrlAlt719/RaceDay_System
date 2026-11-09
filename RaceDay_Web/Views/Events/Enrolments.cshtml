@@ -1,0 +1,67 @@
+﻿@model RaceDay_Web.Models.EventEnrolmentsViewModel
+
+@{
+    ViewData["Title"] = "Event Enrolments";
+}
+
+<h2 class="mt-4">Enrolments: @Model.EventName</h2>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Participant</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Capture Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Enrolments.Count > 0)
+            {
+                foreach (var enrol in Model.Enrolments)
+                {
+                    <tr>
+                        <td>@enrol.ParticipantId</td>
+                        <!-- Fallback: use nested Category.Name OR flat CategoryName -->
+                        <td>@(enrol.Category?.Name ?? enrol.CategoryName ?? "N/A")</td>
+                        <td>
+                            <span class="badge @(enrol.Status == "Confirmed" ? "bg-success" : "bg-warning text-dark")">
+                                @enrol.Status
+                            </span>
+                        </td>
+                        <td>
+                            <form asp-action="AddResult" method="post" class="d-flex gap-2">
+                                <input type="hidden" name="enrolmentId" value="@enrol.EnrolmentId" />
+                                <input type="hidden" name="eventId" value="@Model.EventId" />
+
+                                <input type="text" name="finishTime" class="form-control form-control-sm" placeholder="e.g. 02:15:30" required style="width: 120px;" />
+                                <input type="number" name="position" class="form-control form-control-sm" placeholder="Pos" required style="width: 70px;" />
+
+                                <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No enrolments for this event yet.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to Dashboard</a>

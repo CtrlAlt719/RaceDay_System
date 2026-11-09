@@ -1,0 +1,49 @@
+﻿@model RaceDay_Web.Models.CreateEventViewModel
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<h2 class="mt-4">Create New Event</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Event Name</label>
+                <input asp-for="Name" class="form-control" placeholder="e.g. Cape Town Marathon" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the event..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EventDate" class="form-label">Event Date</label>
+                <input asp-for="EventDate" type="date" class="form-control" />
+                <span asp-validation-for="EventDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Venue" class="form-label">Venue</label>
+                <input asp-for="Venue" class="form-control" placeholder="e.g. Cape Town Stadium" />
+                <span asp-validation-for="Venue" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Create Event</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

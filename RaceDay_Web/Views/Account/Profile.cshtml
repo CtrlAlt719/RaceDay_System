@@ -1,0 +1,21 @@
+﻿@model RaceDay_Web.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h2 class="mt-4">My Profile</h2>
+<hr />
+
+<div class="card shadow-sm" style="max-width: 500px;">
+    <div class="card-body">
+        <h5 class="card-title">Account Details</h5>
+        <p class="card-text">
+            <strong>Email:</strong> @Model.Email <br />
+            <strong>Role:</strong>
+            <span class="badge @(Model.Role == "Organiser" ? "bg-danger" : "bg-success")">
+                @Model.Role
+            </span>
+        </p>
+    </div>
+</div>

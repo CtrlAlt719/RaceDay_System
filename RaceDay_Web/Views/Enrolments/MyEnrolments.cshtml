@@ -1,0 +1,47 @@
+﻿@model List<RaceDay_Web.Models.EnrolmentViewModel>
+
+@{
+    ViewData["Title"] = "My Enrolments";
+}
+
+<h2 class="mt-4">My Enrolments</h2>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row">
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var enrol in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@enrol.Event?.Name</h5>
+                        <p class="card-text">
+                            <strong>Category:</strong> @enrol.Category?.Name <br />
+                            <strong>Status:</strong>
+                      
+                            <span class="badge @(enrol.Status == "Confirmed" ? "bg-success" : "bg-warning text-dark")">
+                                @enrol.Status
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="alert alert-info">You haven't enrolled in any events yet.</div>
+        </div>
+    }
+</div>

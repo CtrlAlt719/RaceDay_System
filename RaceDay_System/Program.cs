@@ -37,15 +37,16 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // -------------------------------------------------------------
-// 3. JWT authentication
+// 3. JWT authentication (FIXED)
 // -------------------------------------------------------------
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Jwt:Key is missing from configuration.");
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+    // CHANGED: We want the API to default to JWT, not Cookies!
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
     .AddJwtBearer(options =>
     {
@@ -83,7 +84,6 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Enter the JWT from /api/auth/login."
     });
 
-    // In Swashbuckle v10, use the document factory syntax:
     c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
         [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
